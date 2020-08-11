@@ -10,7 +10,8 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.create(task_params)
+    @task = Task.new(task_params)
+    @task.save
 
     redirect_to task_path(@task)
   end
@@ -38,5 +39,11 @@ class TasksController < ApplicationController
     @task.destroy
 
     redirect_to task_path(@task)
+  end
+
+  private
+
+  def task_params
+    params.require(:task).permit(:title, :details, :completed)
   end
 end

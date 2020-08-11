@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :find_tasks, only: [:show, :edit, :update, :destroy]
   # As a user, I can list tasks
   def index
     @tasks = Task.all
@@ -17,17 +18,12 @@ class TasksController < ApplicationController
   end
 
   # as a user, I can view the details of a task
-  def show
-    @task = Task.find(params[:id])
-  end
+  def show; end
 
   # As a user, I can edit a task (mark as completed / update title & details)
-  def edit
-    @task = Task.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @task = Task.find(params[:id])
     @task.update(task_params)
 
     redirect_to task_path(@task)
@@ -35,13 +31,16 @@ class TasksController < ApplicationController
 
   # As a user, I can remove a task
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
 
     redirect_to task_path(@task)
   end
 
   private
+
+  def find_tasks
+    @task = Task.find(params[:id])
+  end
 
   def task_params
     params.require(:task).permit(:title, :details, :completed)

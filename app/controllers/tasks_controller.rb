@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
   before_action :find_tasks, only: [:show, :edit, :update, :destroy]
+  after_action :redirect, only: [:create, :update, :destroy]
+
   # As a user, I can list tasks
   def index
     @tasks = Task.all
@@ -13,8 +15,6 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.save
-
-    redirect_to task_path(@task)
   end
 
   # as a user, I can view the details of a task
@@ -25,18 +25,18 @@ class TasksController < ApplicationController
 
   def update
     @task.update(task_params)
-
-    redirect_to task_path(@task)
   end
 
   # As a user, I can remove a task
   def destroy
     @task.destroy
-
-    redirect_to task_path(@task)
   end
 
   private
+
+  def redirect
+    redirect_to task_path(@task)
+  end
 
   def find_tasks
     @task = Task.find(params[:id])

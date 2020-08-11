@@ -1,0 +1,17 @@
+<%= form_for @task do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, :class => 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :details %>
+    <%= f.text_area :details, :class => 'form-control' %>
+  </div>
+  <% unless @task.new_record?() %>
+  <div class="form-group">
+    <%= f.check_box :completed %>
+    <%= f.label :completed %>
+  </div>
+  <% end %>
+  <%= f.submit :class => 'btn btn-primary mt-1' %>
+<% end %>
